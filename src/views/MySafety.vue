@@ -2,6 +2,7 @@
 <div>
   <IHeader></IHeader>
   <h2>安全中心</h2>
+  <Safe></Safe>
   <router-view></router-view>
 </div>
 </template>
@@ -9,11 +10,13 @@
 <script>
   import {mapGetters} from 'vuex'
   import IHeader from '@/components/iheader.vue'
+  import Safe from '@/components/safe.vue'
   // let status = '';
   export default {
     name: "MySafety",
     components: {
       IHeader: IHeader,
+      Safe:Safe
     },
     created(){
       // this.$axios({

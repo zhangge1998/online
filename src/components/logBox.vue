@@ -2,7 +2,7 @@
   <div class="log">
     <form>
       <div class="line">
-        <span>手机号:</span><input type="text" name="tel" v-model="tel" v-on:blur="test" autocomplete="off">
+        <span>手机号:</span><input type="text" name="tel" v-model="tel" v-on:blur="test" autocomplete="off" autofocus>
       </div>
         <div class="line">
           <span>密码:</span><input type="password" name="pw" v-model="pw"> <br>

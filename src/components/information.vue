@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <form>
+    <form @submit.prevent="changeInfo">
       <table>
         <thead>
         <tr>
@@ -12,32 +12,32 @@
         <tr>
           <td class="top-line">
             <div class="photo">
-              <img :src='image' >
+              <img :src='image' name="image" >
             </div>
           </td>
           <td class="top-line">
             <a class="btn btn-hollow">
-              <input type="file" name="file" accept="image/*" class="hide" @change="fn($event)" >更改头像
+              <input type="file" name="file"  accept="image/*" class="hide" @change="fn($event)" >更改头像
             </a>
           </td>
         </tr>
         <tr>
           <td class="title">昵称
           </td>
-          <td><input type="text" placeholder="请输入昵称" name="name" v-model="name"></td>
+          <td><input type="text" required placeholder="请输入昵称" name="name" :value="name"></td>
         </tr>
         <tr>
           <td class="title">性别
           </td>
           <td>
-            <input type="radio" value="1" name="gender" id="men" v-model="sex"><span>男</span>
-            <input type="radio" value="0" name="gender" id="women" v-model="sex"><span>女</span>
+            <input type="radio" value="1" name="gender" id="men" required v-model="sex"><span>男</span>
+            <input type="radio" value="0" name="gender" id="women"  required v-model="sex"><span>女</span>
           </td>
         </tr>
         <tr>
           <td class="title">简介
           </td>
-          <td><textarea name="intro" cols="30" rows="10" v-model="intro"></textarea></td>
+          <td><textarea name="intro" cols="30" rows="10" :value="intro"></textarea></td>
         </tr>
         </tbody>
       </table>
@@ -50,24 +50,25 @@
 <script>
   export default {
     name: 'information',
-    data(){
-      return {
-        name: this.$store.state.mine.getMineBaseMsg.msg.name,
-        intro: this.$store.state.mine.getMineBaseMsg.msg.intro,
-        sex: this.$store.state.mine.getMineBaseMsg.msg.sex,
-        image: this.$store.state.mine.getMineBaseMsg.msg.image,
+    computed:{
+      name(){
+        return this.$store.state.mine.getMineBaseMsg.msg.name
+      },
+      intro(){
+        return this.$store.state.mine.getMineBaseMsg.msg.intro
+      },
+      sex:{
+        get(){
+          return this.$store.state.mine.getMineBaseMsg.msg.sex
+        },
+        set(){
+
+        }
+      },
+      image(){
+        return this.$store.state.mine.getMineBaseMsg.msg.image
       }
     },
-    // computed:{
-    //   getInfor(){
-    //     return {
-    //       name: this.$store.state.mine.getMineBaseMsg.msg.name,
-    //       intro: this.$store.state.mine.getMineBaseMsg.msg.intro,
-    //       sex: this.$store.state.mine.getMineBaseMsg.msg.sex,
-    //       image: this.$store.state.mine.getMineBaseMsg.msg.image,
-    //     }
-    //   }
-    // },
     methods:{
       fn(obj){
         let self = this;
@@ -81,13 +82,25 @@
           headers:{'content-type': 'multipart/form-data'}
         }).then(function(res){
           console.log(res.data);
-          // self.image= require('../../server/' + filename);
-          // self.image = require('../../server/' + res.data);
-          let context = require.context('.', true, /^\.\.\/\.\.\/server\/img\.*\.jpeg$/);
-          let filename = res.data;
-          console.log(context(filename));
-          // self.image = x;
+          let url ='../' + res.data;
+          self.$store.commit('CHANGE_IMG', {url: url});
         });
+      },
+      changeInfo(e){
+        console.log(e);
+        console.log(e.target.image.src)
+        let param = new URLSearchParams();
+        param.append('image',e.target.image.src);
+        param.append('name',e.target.name.value);
+        param.append('sex',e.target.gender.value);
+        param.append('intro',e.target.intro.value);
+        this.$axios({
+          method: 'post',
+          url: '/api/user/changeInfo',
+          data: param
+        }).then(function(res){
+          console.log(res);
+        })
       }
     }
   }
@@ -116,11 +129,16 @@
     /*background: red;*/
     /*border-bottom: 1px solid grey;*/
   }
+  .photo{
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    border: 2px solid rgba(158, 170, 183, 0.51);
+  }
   img{
     width: 80px;
     height: 80px;
     border-radius: 100%;
-
   }
 table{
   background-color: transparent;

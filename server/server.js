@@ -32,13 +32,13 @@ let createFileDirectory = function(path) {
 };
 let stotage = multer.diskStorage({
 // 存储的路径
-  destination:function(req, file, cb) {
-    //先创建路径在保存
-    createFileDirectory('img');
-    //指定文件保存路径
-    cb(null, 'img/')
-  },
-
+//   destination:function(req, file, cb) {
+//     //先创建路径在保存
+//     createFileDirectory('../static');
+//     //指定文件保存路径
+//     cb(null, 'img/')
+//   },
+  destination: '../static/img',
 // 设置图片的名称
   filename:function(req,file,callback){
   // console.log(file);
@@ -62,7 +62,7 @@ app.use('/api/upload',upload.single('file'),function(req,res){
   //     }
   //   });
   // }
-  res.status(200).send('../../server/' + avatar.path);
+  res.status(200).send(avatar.path);
 });
 
 // 后端api路由

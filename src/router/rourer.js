@@ -5,6 +5,7 @@ import Register from '../views/Register'
 import Login from '../views/Login'
 import Home from '../views/Home'
 import Index from '../views/Index'
+import SellerDetail from '../views/SellerDetail'
 import Profile from '../views/Profile'
 import MyOrder from '../views/MyOrder'
 import MyAddress from '../views/MyAddress'
@@ -27,7 +28,17 @@ const routes = [
   },
   {
     path:'/index',
-    component: Index
+    component: Index,
+    // children:[
+    //   {
+    //     path:':num',
+    //     component: SellerDetail
+    //   }
+    // ]
+  },
+  {
+    path:'/index/:id',
+    component: SellerDetail
   },
   {
     path: '/profile',

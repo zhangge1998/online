@@ -93,7 +93,7 @@ route.post('/matchUser', urlencodedParser, function(req, res){
   });
 });
 
-route.use( function(req,res,next){
+route.use(function(req,res,next){
   if( req.session.user ){
     next();
   }else{
@@ -115,6 +115,44 @@ route.post('/userInfo',function(req,res){
     }
     res.end();
   });
+});
+route.post('/changeInfo', function(req, res){
+  let sql = $sql.user.changeUserInfo;
+  let tel = req.session.user.tel;
+  let parmas  = req.body;
+  console.log(parmas);
+  conn.query(sql, [parmas.name, parmas.intro, parmas.sex, parmas.image, tel], function(err, result){
+    if(err){
+      console.log(err);
+    }
+    res.status(200).send('更新成功');
+  })
+});
+route.post('/checkPw', function(req, res){
+  let pw = req.body.pw;
+  let tel = req.session.user.tel;
+  let fpw = req.session.user.pw;
+  console.log(md5(tel + md5(pw)), fpw);
+  if(md5(tel + md5(pw)) === fpw){
+    res.send({status: '1'})
+  }else{
+    res.send({status: '0'})
+  }
+  res.end();
+});
+
+route.post('/changePw', function(req,res){
+  let pw = req.body.npw;
+  let tel = req.session.user.tel;
+  let sql = $sql.user.changePw;
+  let npw = md5(tel + md5(pw));
+  conn.query(sql, [npw, tel], function(err, result){
+    if(err){
+      console.log(err);
+    }else{
+      res.status(200).send({status: '1'});
+    }
+  })
 });
 route.get('/getSession', function(req, res){
   res.send(req.session.user);

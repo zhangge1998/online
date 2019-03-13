@@ -26,5 +26,8 @@ export default {
   },
   getSessionApi(){
     return fetch1('/api/user/getSession');
-  }
+  },
+  // changeImgApi(){
+  //   return fetch('/api/user/changeImg');
+  // }
 }
