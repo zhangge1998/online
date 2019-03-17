@@ -154,7 +154,7 @@ table{
 .btn-hollow{
   font-size: 14px;
   /*border:1px solid rgba(59,194,29,.7);*/
-  color:#42c02e!important;
+  color:#66b1ff!important;
   padding: 4px 12px;
   font-weight: 400;
   line-height: normal;
@@ -209,8 +209,10 @@ input[type='radio'] {
   display: block;
   margin: 0 40%;
   border-radius: 20px;
-  background: rgba(59,194,29,.7);
-  border: none;
+  background: #66b1ff;
+  border-color: #66b1ff;
+  /*border:none;*/
+  color: #FFF;
 }
 #btn{
   outline: none;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <IHeader></IHeader>
+    <IHeader1></IHeader1>
     <div class="register">
       <h1>This is a register page</h1>
       <RegBox></RegBox>
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-  import IHeader from '@/components/iheader.vue'
+  import IHeader1 from '@/components/iheader1.vue'
     import RegBox from '@/components/regBox.vue'
     export default {
       name: "register",
       components:{
-        IHeader: IHeader,
+        IHeader1: IHeader1,
         RegBox: RegBox
       }
     }

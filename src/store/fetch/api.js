@@ -27,6 +27,9 @@ export default {
   getSessionApi(){
     return fetch1('/api/user/getSession');
   },
+  getAddressApi(){
+    return fetch1('/api/user/getAddress')
+  }
   // changeImgApi(){
   //   return fetch('/api/user/changeImg');
   // }

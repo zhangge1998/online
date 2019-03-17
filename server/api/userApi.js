@@ -42,16 +42,31 @@ route.post('/confirmTel', urlencodedParser, (req, res)=>{
 
 // 增加用户接口
 route.post('/addUser',urlencodedParser ,(req, res) => {
-  let sql = $sql.user.add;
+  let sql1 = $sql.user.addUser;
+  let sql2 = $sql.user.getUserId;
+  let sql3 = $sql.user.addUserInfo;
   let params = req.body;
   console.log(params);
   let fpw = md5(params.tel + md5(params.pw));
 
-  conn.query(sql, [params.tel, fpw], function(err, result) {
+  conn.query(sql1, [params.tel, fpw], function(err, result) {
       if (err) {
           console.log(err);
       }
       if (result) {
+          conn.query(sql2, params.tel, function(err, result){
+            if(err){
+              console.log(err);
+            }
+            if(result){
+              let pid = result[0].id;
+              conn.query(sql3, [pid, params.tel], function(err){
+                if(err){
+                  console.log(err);
+                }
+              })
+            }
+          });
           console.log('success1!!!!');
           res.send('注册成功');
           // jsonWrite(res, result);
@@ -66,7 +81,8 @@ route.post('/addUser',urlencodedParser ,(req, res) => {
 // });
 //登录
 route.post('/matchUser', urlencodedParser, function(req, res){
-  let sql = $sql.user.select;
+  let sql = $sql.user.select
+  let sql1 = $sql.user.getUserId;
   let params = req.body;
   console.log(params);
   let fpw = md5(params.tel + md5(params.pw));
@@ -111,6 +127,8 @@ route.post('/userInfo',function(req,res){
     }
     if(result){
       console.log(result);
+      req.session.user.id = result[0].pid;
+      console.log(req.session);
       res.send(result[0]);
     }
     res.end();
@@ -151,6 +169,48 @@ route.post('/changePw', function(req,res){
       console.log(err);
     }else{
       res.status(200).send({status: '1'});
+    }
+  })
+});
+route.post('/addAddr', function(req,res){
+  let pid = req.session.user.id;
+  let tel = req.session.user.tel;
+  let sql = $sql.user.addAddr;
+  let params = req.body;
+  conn.query(sql, [pid, tel, params.name, params.phone, params.address, params.lng, params.lat, params.door], function(err, result){
+    if(err){
+      console.log(err);
+      res.send({status: 0});
+    }
+    if(result){
+      res.send({status: 1});
+    }
+    res.end();
+  })
+});
+route.get('/getAddress', function(req, res){
+  let sql = $sql.user.getAddr;
+  let tel = req.session.user.tel;
+  conn.query(sql, tel, function(err, result){
+    if(err){
+      console.log(err);
+      res.send({status: 0});
+    }
+    if(result){
+      res.send(result);
+    }
+  })
+});
+route.post('/delAddr', function(req, res){
+  let sql = $sql.user.delAddr;
+  let id = req.body.id;
+  conn.query(sql, id, function(err, result){
+    if(err){
+      console.log(err);
+      res.send({status: 0});
+    }
+    if(result){
+      res.send({status: 1});
     }
   })
 });

@@ -1,6 +1,6 @@
 <template>
     <div>
-      <IHeader></IHeader>
+      <IHeader1></IHeader1>
       <SellerList></SellerList>
       <!--<div id="nav">-->
         <!--<router-link to="/register" tag="button">Register</router-link>-->
@@ -11,12 +11,12 @@
 </template>
 
 <script>
-  import IHeader from '@/components/iheader.vue'
+  import IHeader1 from '@/components/iheader1.vue'
   import SellerList from '@/components/sellerList.vue'
     export default {
         name: "Home",
         components: {
-        IHeader: IHeader,
+        IHeader1: IHeader1,
         SellerList:SellerList
       },
     }

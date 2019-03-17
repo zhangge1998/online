@@ -1,6 +1,6 @@
 <template>
   <div>
-    <IHeader></IHeader>
+    <IHeader1></IHeader1>
     <div class="login">
       <h1>This is a login page</h1>
       <LogBox></LogBox>
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-  import IHeader from '@/components/iheader.vue'
+  import IHeader1 from '@/components/iheader1.vue'
   import LogBox from '@/components/logBox.vue'
     export default {
         name: "login",
         components: {
-          IHeader: IHeader,
+          IHeader1: IHeader1,
           LogBox: LogBox
         }
     }

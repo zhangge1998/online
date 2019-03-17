@@ -2,13 +2,10 @@
     <div class="nav">
         <div class="list">
             <p class="rest">订餐系统</p>
-            <p class="index" v-show="showTwo"><router-link to="/index">首页</router-link></p>
-            <p class="index" v-show="showOne"><router-link to="/">首页</router-link></p>
-            <p class="bo" v-show="showOne"><router-link to="/login">登录</router-link></p>
-            <p class="bo" v-show="showOne"><router-link to="/register">注册</router-link></p>
-            <p v-show="showTwo" class="shoppingCar">购物车</p>
-            <div class="img" v-show="showTwo"><img :src="image"></div>
-            <span class="name" v-show="showTwo" v-on:click="show($event)" >{{name}}</span>
+            <p class="index"><router-link to="/index">首页</router-link></p>
+            <p class="shoppingCar">购物车</p>
+            <div class="img"><img :src="image"></div>
+            <span class="name" v-on:click="show($event)" >{{name}}</span>
             <ul>
               <li><router-link to="/profile">个人资料</router-link></li>
               <li><router-link to="/myOrder">我的订单</router-link></li>
@@ -31,12 +28,6 @@
         },
         name(){
           return this.$store.state.mine.getMineBaseMsg.msg.name
-        },
-        showOne(){
-          return JSON.stringify(this.$store.state.getSession.getSessionData.data) == '{}'
-        },
-        showTwo(){
-          return !(JSON.stringify(this.$store.state.getSession.getSessionData.data) == '{}')
         },
       },
       methods:{

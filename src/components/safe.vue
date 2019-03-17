@@ -2,7 +2,7 @@
     <div class="safeBox">
       <form @submit.prevent="change">
         <span>请输入旧密码:</span>
-        <input type="text" v-on:blur="check($event)" name="old" v-model="oldPw" autocomplete="off"><span class="warn">{{isTrue}}</span>
+        <input type="text" v-on:blur="check($event)" name="old" v-model="oldPw" autocomplete="off" autofocus="autofocus"><span class="warn">{{isTrue}}</span>
         <span>请输入新密码:</span>
         <input type="text" name="new" v-model="newPw" autocomplete="off"><span class="warn">{{isWrong}}</span>
         <input type="submit" value="提交">
@@ -74,7 +74,7 @@
             }else{
               console.log('no');
               this.newPw = '';
-              this.isWrong = '新密码有6-10位数字字母组成，且不能是纯字母'
+              this.isWrong = '新密码由6-10位数字字母组成，且不能是纯字母'
             }
           }
         }
@@ -120,11 +120,12 @@
     border: none;
     outline: none;
     color: #ffffff;
-    background-color: rgba(59,194,29,.7);
+    background-color: #66b1ff;
     text-decoration: none;
   }
   .warn{
     color: red;
+    font-size: 12px;
   }
   .final{
     width: 250px;
